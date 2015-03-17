@@ -36,7 +36,6 @@ public class MainActivity extends Activity implements SensorEventListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_main);
 
-		View0 = (TextView) findViewById(R.id.tv0);
 		View1 = (TextView) findViewById(R.id.tv1);
 		View2 = (TextView) findViewById(R.id.tv2);
 		View3 = (TextView) findViewById(R.id.tv3);
@@ -57,49 +56,50 @@ public class MainActivity extends Activity implements SensorEventListener {
 		List<Sensor> allSensors = sm.getSensorList(Sensor.TYPE_ALL);
 
 		// 显示有多少个传感器
-		View0.setText("经检测该手机有" + allSensors.size() + "个传感器，他们分别是：\n");
+//		View0.setText("经检测该手机有" + allSensors.size() + "个传感器，他们分别是：\n");
 
 		// 显示每个传感器的具体信息
 		for (Sensor s : allSensors) {
 			sm.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
-			String tempString = "\n" + "  设备名称：" + s.getName() + "\n"
-					+ "  设备版本：" + s.getVersion() + "\n" + "  供应商："
-					+ s.getVendor() + "\n";
-			switch (s.getType()) {
-			case Sensor.TYPE_ACCELEROMETER:
-				View0.setText(View0.getText().toString() + s.getType()
-						+ " 加速度传感器accelerometer" + tempString);
-				break;
-			case Sensor.TYPE_GYROSCOPE:
-				View0.setText(View0.getText().toString() + s.getType()
-						+ " 陀螺仪传感器gyroscope" + tempString);
-				break;
-			case Sensor.TYPE_LIGHT:
-				View0.setText(View0.getText().toString() + s.getType()
-						+ " 环境光线传感器light" + tempString);
-				break;
-			case Sensor.TYPE_MAGNETIC_FIELD:
-				View0.setText(View0.getText().toString() + s.getType()
-						+ " 电磁场传感器magnetic field" + tempString);
-				break;
-			case Sensor.TYPE_PRESSURE:
-				View0.setText(View0.getText().toString() + s.getType()
-						+ " 压力传感器pressure" + tempString);
-				break;
-			case Sensor.TYPE_PROXIMITY:
-				View0.setText(View0.getText().toString() + s.getType()
-						+ " 距离传感器proximity" + tempString);
-				break;
-			case Sensor.TYPE_AMBIENT_TEMPERATURE:
-				View0.setText(View0.getText().toString() + s.getType()
-						+ " 温度传感器temperature" + tempString);
-				break;
-			default:
-				View0.setText(View0.getText().toString() + s.getType()
-						+ " 未知传感器" + tempString);
-				break;
-			}
 		}
+		// String tempString = "\n" + "  设备名称：" + s.getName() + "\n"
+		// + "  设备版本：" + s.getVersion() + "\n" + "  供应商："
+		// + s.getVendor() + "\n";
+		// switch (s.getType()) {
+		// case Sensor.TYPE_ACCELEROMETER:
+		// View0.setText(View0.getText().toString() + s.getType()
+		// + " 加速度传感器accelerometer" + tempString);
+		// break;
+		// case Sensor.TYPE_GYROSCOPE:
+		// View0.setText(View0.getText().toString() + s.getType()
+		// + " 陀螺仪传感器gyroscope" + tempString);
+		// break;
+		// case Sensor.TYPE_LIGHT:
+		// View0.setText(View0.getText().toString() + s.getType()
+		// + " 环境光线传感器light" + tempString);
+		// break;
+		// case Sensor.TYPE_MAGNETIC_FIELD:
+		// View0.setText(View0.getText().toString() + s.getType()
+		// + " 电磁场传感器magnetic field" + tempString);
+		// break;
+		// case Sensor.TYPE_PRESSURE:
+		// View0.setText(View0.getText().toString() + s.getType()
+		// + " 压力传感器pressure" + tempString);
+		// break;
+		// case Sensor.TYPE_PROXIMITY:
+		// View0.setText(View0.getText().toString() + s.getType()
+		// + " 距离传感器proximity" + tempString);
+		// break;
+		// case Sensor.TYPE_AMBIENT_TEMPERATURE:
+		// View0.setText(View0.getText().toString() + s.getType()
+		// + " 温度传感器temperature" + tempString);
+		// break;
+		// default:
+		// View0.setText(View0.getText().toString() + s.getType()
+		// + " 未知传感器" + tempString);
+		// break;
+		// }
+		// }
 
 	}
 
