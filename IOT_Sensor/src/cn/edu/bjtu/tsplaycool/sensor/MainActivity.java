@@ -9,14 +9,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements SensorEventListener {
 
 	private SensorManager sm = null;
 
+	private LinearLayout mSensorLinearLayout;
 	private TextView View0 = null;
 	private TextView View1 = null;
 	private TextView View2 = null;
@@ -35,7 +35,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_main);
-
+		mSensorLinearLayout = (LinearLayout) findViewById(R.id.sensor_linearlayout);
 		View1 = (TextView) findViewById(R.id.tv1);
 		View2 = (TextView) findViewById(R.id.tv2);
 		View3 = (TextView) findViewById(R.id.tv3);
@@ -56,51 +56,18 @@ public class MainActivity extends Activity implements SensorEventListener {
 		List<Sensor> allSensors = sm.getSensorList(Sensor.TYPE_ALL);
 
 		// 显示有多少个传感器
-//		View0.setText("经检测该手机有" + allSensors.size() + "个传感器，他们分别是：\n");
+		// View0.setText("经检测该手机有" + allSensors.size() + "个传感器，他们分别是：\n");
 
+		TextView tv = new TextView(this);
+		tv.setText("Total sensors: " + allSensors.size());
+		mSensorLinearLayout.addView(tv);
 		// 显示每个传感器的具体信息
 		for (Sensor s : allSensors) {
+			tv = new TextView(this);
+			tv.setText(s.toString());
+			mSensorLinearLayout.addView(tv);
 			sm.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
 		}
-		// String tempString = "\n" + "  设备名称：" + s.getName() + "\n"
-		// + "  设备版本：" + s.getVersion() + "\n" + "  供应商："
-		// + s.getVendor() + "\n";
-		// switch (s.getType()) {
-		// case Sensor.TYPE_ACCELEROMETER:
-		// View0.setText(View0.getText().toString() + s.getType()
-		// + " 加速度传感器accelerometer" + tempString);
-		// break;
-		// case Sensor.TYPE_GYROSCOPE:
-		// View0.setText(View0.getText().toString() + s.getType()
-		// + " 陀螺仪传感器gyroscope" + tempString);
-		// break;
-		// case Sensor.TYPE_LIGHT:
-		// View0.setText(View0.getText().toString() + s.getType()
-		// + " 环境光线传感器light" + tempString);
-		// break;
-		// case Sensor.TYPE_MAGNETIC_FIELD:
-		// View0.setText(View0.getText().toString() + s.getType()
-		// + " 电磁场传感器magnetic field" + tempString);
-		// break;
-		// case Sensor.TYPE_PRESSURE:
-		// View0.setText(View0.getText().toString() + s.getType()
-		// + " 压力传感器pressure" + tempString);
-		// break;
-		// case Sensor.TYPE_PROXIMITY:
-		// View0.setText(View0.getText().toString() + s.getType()
-		// + " 距离传感器proximity" + tempString);
-		// break;
-		// case Sensor.TYPE_AMBIENT_TEMPERATURE:
-		// View0.setText(View0.getText().toString() + s.getType()
-		// + " 温度传感器temperature" + tempString);
-		// break;
-		// default:
-		// View0.setText(View0.getText().toString() + s.getType()
-		// + " 未知传感器" + tempString);
-		// break;
-		// }
-		// }
-
 	}
 
 	@Override
@@ -111,7 +78,6 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-
 		float[] values = event.values;
 		String str = "X: ";
 		for (int i = 0; i < values.length; i++) {
@@ -125,7 +91,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 				str += values[2];
 			}
 		}
-		switch (event.accuracy) {
+		switch (event.sensor.getType()) {
 		case Sensor.TYPE_ACCELEROMETER:
 			View1.setText("Accelerometer(加速度)：\n" + str);
 			break;
@@ -138,8 +104,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 		case Sensor.TYPE_LIGHT:
 			View5.setText("Light(光线)：\n" + str);
 			break;
-		case Sensor.TYPE_PRESSURE:
-			View6.setText("Pressure(压力)：\n" + str);
+		case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
+			View6.setText("GEOMAGNETIC_ROTATION(压力)：\n" + str);
 			break;
 		case Sensor.TYPE_AMBIENT_TEMPERATURE:
 			View7.setText("Temperature(温度)：\n" + str);
@@ -157,7 +123,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 			View11.setText("Rotation Vector(旋转矢量)：\n" + str);
 			break;
 		default:
-			View12.setText("Normal(未知)：\n" + str);
+			View12.setText("Normal(未知)：\n" + event.sensor.toString());
+			Log.d("tanshuai", event.accuracy + "----" + event.sensor.toString());
 			break;
 		}
 
