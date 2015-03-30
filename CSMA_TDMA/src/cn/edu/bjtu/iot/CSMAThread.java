@@ -3,14 +3,17 @@ package cn.edu.bjtu.iot;
 import java.util.Random;
 
 public class CSMAThread extends Thread {
+	private IStatusCallBack callBack;// 传输成功回调
 	private int dataCapacity;// 模拟传输的数据量
 	private int restDataCapacity;// 剩余需要传输的数据量
 	private String threadName; // 线程名字
 
-	public CSMAThread(int dataCapacity, String threadName) {
+	public CSMAThread(int dataCapacity, String threadName,
+			IStatusCallBack callBack) {
 		this.dataCapacity = dataCapacity;
 		this.restDataCapacity = dataCapacity;
 		this.threadName = threadName;
+		this.callBack = callBack;
 	}
 
 	// 二进制指数退避算法相关成员变量
@@ -52,6 +55,7 @@ public class CSMAThread extends Thread {
 					System.out.println(threadName + " 传输完毕!");
 					// 传输完成
 					CSMA_Channel.emptyChannel();
+					callBack.onTransferSuccess(threadName);
 				}
 			}
 		}

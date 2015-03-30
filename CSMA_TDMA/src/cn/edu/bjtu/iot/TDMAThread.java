@@ -10,6 +10,7 @@ public class TDMAThread extends Thread {
 
 	public void run() {
 		super.run();
+		long before = System.currentTimeMillis();
 		while (A.getRestDataCapacity() != 0 || B.getRestDataCapacity() != 0) {
 			try {
 				sleep(1000);
@@ -24,5 +25,9 @@ public class TDMAThread extends Thread {
 				B.sendATimeSlot();
 			}
 		}
+		long after = System.currentTimeMillis();
+		long temp = 180 * 1000 / (after - before);
+		System.out.println("ÍÌÍÂÁ¿£º" + temp);
+		System.out.println("ÑÓ³Ù:" + (after - before) / 1000);
 	}
 }
