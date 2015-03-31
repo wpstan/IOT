@@ -9,11 +9,14 @@ public class CSMAMain {
 		public void onTransferSuccess(String name) {
 			callBackNum++;
 			// 全部回调完成
-			if (callBackNum == 2) {
+			if (callBackNum == 4) {
 				afterTime = System.currentTimeMillis();
-				long temp = 180 * 1000 / (afterTime - beforeTime);
-				System.out.println("吞吐量：" + temp);
-				System.out.println("延迟:" + (afterTime - beforeTime)/1000);
+				long temp = 340 * 1000 / (afterTime - beforeTime);
+				System.out.println("吞吐量:" + temp);
+				System.out
+						.println("信道利用率:"
+								+ (afterTime - beforeTime - CSMA_Channel.totalEmpytTime)
+								* 100 / (afterTime - beforeTime) + "%");
 			}
 		}
 	};
@@ -22,7 +25,11 @@ public class CSMAMain {
 		beforeTime = System.currentTimeMillis();
 		Thread csmaA = new CSMAThread(100, "Thread-A", callBack);
 		Thread csmaB = new CSMAThread(80, "Thread-B", callBack);
+		Thread csmaC = new CSMAThread(90, "Thread-C", callBack);
+		Thread csmaD = new CSMAThread(70, "Thread-D", callBack);
 		csmaA.start();
 		csmaB.start();
+		csmaC.start();
+		csmaD.start();
 	}
 }

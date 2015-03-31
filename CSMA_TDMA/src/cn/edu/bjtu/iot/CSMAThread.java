@@ -41,7 +41,9 @@ public class CSMAThread extends Thread {
 				}
 
 			} else {
-				CSMA_Channel.occupyChannelThreadName = threadName;
+				if (!CSMA_Channel.occupyChannelThreadName.equals(threadName)) {
+					CSMA_Channel.setChannelName(threadName);
+				}
 				try {
 					sleep(1000);
 				} catch (InterruptedException e) {
